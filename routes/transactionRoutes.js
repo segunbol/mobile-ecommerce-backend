@@ -1,6 +1,6 @@
 import express from 'express'
-import { createTransaction, deleteTransaction, getAllTransactions, getTransaction, updateTransaction } from '../controller/transactionController';
-import { verifyToken } from '../helpers/utils';
+import { createTransaction, deleteTransaction, getAllTransactions, getTransaction, updateTransaction } from '../controller/transactionController.js';
+import { verifyToken } from '../helpers/utils.js';
 
 const transactionRoutes = express.Router();
 

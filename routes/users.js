@@ -21,7 +21,7 @@ usersRoutes.get('/:id', async(req,res)=>{
     if(!user) {
         res.status(500).json({message: 'The user with the given ID was not found.'})
     } 
-    console.log(user.password)
+    // console.log(user.password)
     res.status(200).send(user);
 })
 
