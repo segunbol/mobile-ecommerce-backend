@@ -95,6 +95,17 @@ export const createAccountForAllUsers = async (req, res) => {
 
 // Perform transaction
 export const performTransaction = async (req, res) => {
+  const user = await AccountBalance.findOne(req.body.userId)
+  if (user.amount > req.body.amount){
+    // Put Logic Here
+  }
+  let transact = new Transaction({
+    userId: req.body.userId,
+    type: req.body.type,
+    amount: req.body.amount
+  })
+
+
   try {
     const userId = req.userId; // Extracted from the authenticated user token
     const { amount, type } = req.body;
@@ -106,7 +117,7 @@ export const performTransaction = async (req, res) => {
     let accountBalance = await AccountBalance.findOne({ userId });
 
     if (!accountBalance) {
-      accountBalance = await AccountBalance.create({ userId, balance: 0 });
+      return res.status().send("Bros, You no get Wallet, Do normal normal, make you get One")
     }
 
     if (type === 'credit') {
