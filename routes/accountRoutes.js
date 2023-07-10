@@ -1,6 +1,6 @@
 import express from 'express';
 import { verifyToken } from '../helpers/utils.js';
-import { createAccount, createAccountForAllUsers, deleteAccountBalance, deleteAllAccountBalance, getAccountBalance, getAllAccounts, performTransaction, updateAccountBalance } from '../controller/accountController.js';
+import { createAccount, createAccountForAllUsers, deleteAccountBalance, deleteAllAccountBalance, getAccountBalance, getAllAccounts, updateAccountBalance } from '../controller/accountController.js';
 const accountRoutes = express.Router();
 
 //Get All Accounts
@@ -16,10 +16,9 @@ accountRoutes.post('/createexisting', createAccount)
 
 accountRoutes.post('/createallusers',createAccountForAllUsers)
 
-// Perform transaction
-accountRoutes.post('/transaction', verifyToken, performTransaction);
 
-accountRoutes.put('/balance', verifyToken, updateAccountBalance);
+
+accountRoutes.put('/balance', updateAccountBalance);
 
 // Delete account balance
 accountRoutes.delete('/:id', verifyToken, deleteAccountBalance);

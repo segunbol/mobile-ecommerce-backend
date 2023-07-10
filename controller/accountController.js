@@ -31,6 +31,7 @@ export const getAccountBalance = async (req, res) => {
 
 //Automatical create account for existing users
 //Create Account for Users One By One
+// Only SuperAdmin will have access to this endpoint
 export const createAccount = async (req, res) => {
   try {
     const userExist = await User.findById(req.body.userId)
@@ -93,70 +94,27 @@ export const createAccountForAllUsers = async (req, res) => {
 };
 
 
-// Perform transaction
-export const performTransaction = async (req, res) => {
-  const user = await AccountBalance.findOne(req.body.userId)
-  if (user.amount > req.body.amount){
-    // Put Logic Here
-  }
-  let transact = new Transaction({
-    userId: req.body.userId,
-    type: req.body.type,
-    amount: req.body.amount
-  })
-
-
-  try {
-    const userId = req.userId; // Extracted from the authenticated user token
-    const { amount, type } = req.body;
-
-    // Create a new transaction
-    const transaction = await Transaction.create({ userId, amount, type });
-
-    // Update account balance based on transaction type
-    let accountBalance = await AccountBalance.findOne({ userId });
-
-    if (!accountBalance) {
-      return res.status().send("Bros, You no get Wallet, Do normal normal, make you get One")
-    }
-
-    if (type === 'credit') {
-      accountBalance.balance += amount;
-    } else if (type === 'debit') {
-      if (accountBalance.balance < amount) {
-        return res.status(400).json({ message: 'Insufficient funds' });
-      }
-      accountBalance.balance -= amount;
-    }
-
-    await accountBalance.save();
-
-    res.json(transaction);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
 
 // Update account balance
-export const updateAccountBalance = async (req, res) => {
-  try {
-    const userId = req.userId; // Extracted from the authenticated user token
-    const { balance } = req.body;
+// export const updateAccountBalance = async (req, res) => {
+//   try {
+//     const userId = req.userId; // Extracted from the authenticated user token
+//     const  balance  = req.body.amount;
 
-    let accountBalance = await AccountBalance.findOne({ userId });
+//     let accountBalance = await AccountBalance.findOne(userId);
 
-    if (!accountBalance) {
-      return res.status(404).json({ message: 'Account balance not found' });
-    }
+//     if (!accountBalance) {
+//       return res.status(404).json({ message: 'Account balance not found' });
+//     }
 
-    accountBalance.balance = balance;
-    await accountBalance.save();
+//     accountBalance.balance = balance;
+//     await accountBalance.save();
 
-    res.json(accountBalance);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
+//     res.json(accountBalance);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
 
 // Delete account balance
 export const deleteAccountBalance = async (req, res) => {

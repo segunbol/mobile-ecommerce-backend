@@ -1,5 +1,5 @@
 import express from 'express'
-import { createTransaction, deleteTransaction, getAllTransactions, getTransaction, updateTransaction } from '../controller/transactionController.js';
+import { createTransaction, deleteTransaction, getAllTransactions, getTransaction, sendMoney, updateTransaction } from '../controller/transactionController.js';
 import { verifyToken } from '../helpers/utils.js';
 
 const transactionRoutes = express.Router();
@@ -14,7 +14,7 @@ transactionRoutes.get('/transactions/:id', verifyToken, getTransaction);
 transactionRoutes.post('/transactions', verifyToken, createTransaction);
 
 // Update a transaction
-transactionRoutes.put('/transactions/:id', verifyToken, updateTransaction);
+transactionRoutes.put('/sendmoney', sendMoney);
 
 // Delete a transaction
 transactionRoutes.delete('/transactions/:id', verifyToken, deleteTransaction);
