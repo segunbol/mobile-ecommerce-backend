@@ -13,7 +13,17 @@ const transactionSchema = new mongoose.Schema({
   },
   amount: {
     type: Number,
+    maxDecimalPrecision: 128,
+    format: {thousandsSeparator: ","},
+    displayAsString: true,
     required: true,
+  },
+  balance: {
+    type: Number,
+    maxDecimalPrecision: 128,
+    format: {thousandsSeparator: ","},
+    displayAsString: true,
+    required: true
   },
   type: {
     type: String,

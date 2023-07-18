@@ -15,14 +15,14 @@ export const getAllAccounts = async(req, res) => {
 // Get account balance
 export const getAccountBalance = async (req, res) => {
   try {
-    const userId = req.userId; // Extracted from the authenticated user token
-
+    const userId = req.params.id; // Extracted from the authenticated user token
+    console.log(userId)
     const accountBalance = await AccountBalance.findOne({ userId });
 
     if (!accountBalance) {
       return res.status(404).json({ message: 'Account balance not found' });
     }
-
+    console.log(typeof accountBalance.balance)
     res.json(accountBalance);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -31,7 +31,6 @@ export const getAccountBalance = async (req, res) => {
 
 //Automatical create account for existing users
 //Create Account for Users One By One
-// Only SuperAdmin will have access to this endpoint
 export const createAccount = async (req, res) => {
   try {
     const userExist = await User.findById(req.body.userId)
@@ -96,25 +95,26 @@ export const createAccountForAllUsers = async (req, res) => {
 
 
 // Update account balance
-// export const updateAccountBalance = async (req, res) => {
-//   try {
-//     const userId = req.userId; // Extracted from the authenticated user token
-//     const  balance  = req.body.amount;
+export const updateAccountBalance = async (req, res) => {
+  try {
+    const userId = req.params.id; // Extracted from the authenticated user token
+    // const { balance } = req.body;
 
-//     let accountBalance = await AccountBalance.findOne(userId);
+    let accountBalance = await AccountBalance.findOne({ userId });
 
-//     if (!accountBalance) {
-//       return res.status(404).json({ message: 'Account balance not found' });
-//     }
-
-//     accountBalance.balance = balance;
-//     await accountBalance.save();
-
-//     res.json(accountBalance);
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };
+    if (!accountBalance) {
+      return res.status(404).json({ message: 'Account balance not found' });
+    }
+    // const stringBalance = String(accountBalance.balance)
+    accountBalance.balance = String(accountBalance.balance);
+    await accountBalance.save();
+    let newAccountBalance = await AccountBalance.findOne({ userId });
+    console.log(newAccountBalance)
+    res.json(newAccountBalance);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 
 // Delete account balance
 export const deleteAccountBalance = async (req, res) => {

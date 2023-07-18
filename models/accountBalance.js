@@ -8,8 +8,12 @@ const accountBalanceSchema = new mongoose.Schema({
       
     },
     balance: {
-      type: Number,
-      default: 0,
+      type: String,
+      maxDecimalPrecision: 128,
+      displayAsString: true,
+      format: {thousandsSeparator: ","},
+      required: true,
+
     },
   });
   

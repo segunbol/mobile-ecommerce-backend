@@ -1,6 +1,6 @@
 import AccountBalance from "../models/accountBalance.js";
 import Transaction from "../models/transaction.js";
-
+import { add,  subtract } from "../helpers/utils.js";
 // Get all transactions for a user
 // User will only see transactions with their UserId
 // SuperAdmin will have access to all transaction
@@ -70,7 +70,7 @@ export const sendMoney = async (req, res) => {
     if (!receiverWallet) {
       return res.status(404).json({ message: "Receiver not found" });
     }
-    if (!senderWallet || !receiverWallet) {
+    if (!senderWallet) {
       return res.status(404).json({ message: "Sender not found" });
     }
 
@@ -79,36 +79,39 @@ export const sendMoney = async (req, res) => {
     }
 
     if (type === "debit") {
-      const newSenderBalance = senderWallet.balance - amount;
-      const newReceiverBalance = receiverWallet.balance + amount;
+      const newSenderBalance =  subtract(String(senderWallet.balance), amount);
+      const newReceiverBalance = add(String(receiverWallet.balance), amount );
 
       const senderBalance = await AccountBalance.findByIdAndUpdate(
         senderWallet._id,
-        { balance: newSenderBalance },
+        { balance: String(newSenderBalance)},
         { new: true }
       );
 
       const receiverBalance = await AccountBalance.findByIdAndUpdate(
         receiverWallet._id,
-        { balance: newReceiverBalance },
+        { balance: String(newReceiverBalance) },
         { new: true }
       );
-
+      console.log(`New ${newReceiverBalance}`)
+      console.log( `Old ${receiverWallet}` )
       const oppositeType = "credit";
       const receiverTransaction = new Transaction({
         receiverUserId: receiverWallet.userId,
         senderUserId: senderWallet.userId,
         type: oppositeType,
         amount,
+        balance:newReceiverBalance,
       });
 
       await receiverTransaction.save();
 
       const senderTransaction = new Transaction({
         receiverUserId: receiverWallet.userId,
-        senderUserId: senderWallet.userId,
+        senderUserId: senderWallet.userId, 
         type,
         amount,
+        balance:newSenderBalance,
       });
 
       await senderTransaction.save();

@@ -61,3 +61,50 @@ export const sendSMSNotification = async (phoneNumber, message) => {
       res.status(401).json({ message: 'Invalid token' });
     }
   };
+
+export const add = (a, b) => {
+  var result = ''
+  var carry = 0
+a = a.split('')
+b = b.split('')
+while (a.length || b.length || carry) {
+  carry += ~~a.pop() + ~~b.pop()
+  result = carry % 10 + result
+  carry = carry > 9
+}
+if (/^0+/.test(result)) {
+  let fan = result.replace(/^0+/, '')
+  return fan
+}else{
+  return result
+}
+}
+
+export const subtract = (a, b) => {
+  var result = '';
+  var borrow = 0;
+  a = a.split('');
+  b = b.split('');
+
+  while (a.length || b.length) {
+    var digitA = ~~a.pop() || 0;
+    var digitB = ~~b.pop() || 0;
+
+    // Apply borrowing if necessary
+    if (digitA < digitB + borrow) {
+      digitA += 10;
+      borrow = 1;
+    } else {
+      borrow = 0;
+    }
+
+    var subtractedDigit = digitA - digitB - borrow;
+    result = subtractedDigit + result;
+  }
+  if (/^0+/.test(result)) {
+    let fan = result.replace(/^0+/, '')
+    return fan
+  }else{
+    return result
+  }
+};

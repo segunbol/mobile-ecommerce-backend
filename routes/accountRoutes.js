@@ -7,7 +7,7 @@ const accountRoutes = express.Router();
 accountRoutes.get('/', getAllAccounts);
 
 // Get account balance
-accountRoutes.get('/balance', verifyToken, getAccountBalance);
+accountRoutes.get('/balance/:id', getAccountBalance);
 
 // Create Account for Existing Users
 accountRoutes.post('/createexisting', createAccount)
@@ -18,7 +18,7 @@ accountRoutes.post('/createallusers',createAccountForAllUsers)
 
 
 
-accountRoutes.put('/balance', updateAccountBalance);
+accountRoutes.put('/balance/:id', updateAccountBalance);
 
 // Delete account balance
 accountRoutes.delete('/:id', verifyToken, deleteAccountBalance);
