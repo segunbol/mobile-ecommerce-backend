@@ -7,8 +7,8 @@ const accountBalanceSchema = new mongoose.Schema({
       required: true,
       
     },
-    balance: {
-      type: String,
+    walletBalance: {
+      type: Number,
       maxDecimalPrecision: 128,
       displayAsString: true,
       format: {thousandsSeparator: ","},

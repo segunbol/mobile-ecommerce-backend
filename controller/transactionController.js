@@ -79,8 +79,8 @@ export const sendMoney = async (req, res) => {
     }
 
     if (type === "debit") {
-      const newSenderBalance =  subtract(String(senderWallet.balance), amount);
-      const newReceiverBalance = add(String(receiverWallet.balance), amount );
+      const newSenderBalance =  senderWallet.balance - amount;
+      const newReceiverBalance = receiverWallet.balance + amount ;
 
       const senderBalance = await AccountBalance.findByIdAndUpdate(
         senderWallet._id,
@@ -107,8 +107,8 @@ export const sendMoney = async (req, res) => {
       await receiverTransaction.save();
 
       const senderTransaction = new Transaction({
+        senderUserId: senderWallet.userId,
         receiverUserId: receiverWallet.userId,
-        senderUserId: senderWallet.userId, 
         type,
         amount,
         balance:newSenderBalance,

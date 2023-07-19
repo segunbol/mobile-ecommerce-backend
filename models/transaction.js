@@ -18,7 +18,7 @@ const transactionSchema = new mongoose.Schema({
     displayAsString: true,
     required: true,
   },
-  balance: {
+  walletBalance: {
     type: Number,
     maxDecimalPrecision: 128,
     format: {thousandsSeparator: ","},

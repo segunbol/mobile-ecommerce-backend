@@ -62,22 +62,25 @@ export const sendSMSNotification = async (phoneNumber, message) => {
     }
   };
 
+// Write function to confirm password
+
 export const add = (a, b) => {
   var result = ''
   var carry = 0
-a = a.split('')
-b = b.split('')
-while (a.length || b.length || carry) {
-  carry += ~~a.pop() + ~~b.pop()
-  result = carry % 10 + result
-  carry = carry > 9
-}
-if (/^0+/.test(result)) {
-  let fan = result.replace(/^0+/, '')
-  return fan
-}else{
-  return result
-}
+  a = a.split('')
+  b = b.split('')
+  while (a.length || b.length || carry) {
+    carry += ~~a.pop() + ~~b.pop()
+    console.log(typeof carry)
+    result = carry % 10 + result
+    carry = carry > 9
+  }
+  if (/^0+/.test(result)) {
+    let fan = result.replace(/^0+/, '')
+    return fan
+  }else{
+    return result
+  }
 }
 
 export const subtract = (a, b) => {
@@ -107,4 +110,19 @@ export const subtract = (a, b) => {
   }else{
     return result
   }
+};
+
+export const displayLargeNumbers = (number) => {
+  var result = "";
+  var i = 0;
+  while (number > 0) {
+    var digit = number % 10;
+    result = digit + result;
+    number = Math.floor(number / 10);
+    i++;
+    if (i % 3 === 0 && number !== 0) {
+      result = "," + result;
+    }
+  }
+  return result;
 };

@@ -14,6 +14,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import accountRoutes from './routes/accountRoutes.js';
 import transactionRoutes from './routes/transactionRoutes.js';
+import storeRoutes from './routes/storeRoute.js';
 
 dotenv.config()
 
@@ -50,6 +51,7 @@ app.use(`${api}/users`, usersRoutes);
 app.use(`${api}/orders`, ordersRoutes);
 app.use(`${api}/account`, accountRoutes);
 app.use(`${api}/transaction`, transactionRoutes);
+app.use(`${api}/stores`, storeRoutes);
 
 
 app.listen(3000, ()=> { 

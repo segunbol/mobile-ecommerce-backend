@@ -1,54 +1,22 @@
-export const subtract = (a, b) => {
-    var result = '';
-    var borrow = 0;
-    a = a.split('');
-    b = b.split('');
-  
-    while (a.length || b.length) {
-      var digitA = ~~a.pop() || 0;
-      var digitB = ~~b.pop() || 0;
-  
-      // Apply borrowing if necessary
-      if (digitA < digitB + borrow) {
-        digitA += 10;
-        borrow = 1;
-      } else {
-        borrow = 0;
-      }
-  
-      var subtractedDigit = digitA - digitB - borrow;
-      result = subtractedDigit + result;
-    }
-  
-    return result;
-  };
-
-
-export const addLargeNumber = (a, b) => {
-const numA = BigInt(a);
-const numB = BigInt(b);
-const sum = numA + numB;
-return Number(sum);
-};
+import BigNumber from "bignumber.js"
 
 const addLargeNumbers = (x, y) => {
   var result = "";
   var carry = 0;
-  for (var i = Math.max(x.length, y.length); i >= 0; i--) {
-    var digitX = i < x.length ? x[i] - "0" : 0;
-    var digitY = i < y.length ? y[i] - "0" : 0;
+  for (var i = Math.max(x.length, y.length) - 1; i >= 0; i--) {
+    var digitX = i < x.length ? parseInt(x[i]) : 0;
+    var digitY = i < y.length ? parseInt(y[i]) : 0;
     var sumDigit = digitX + digitY + carry;
-    carry = sumDigit > 9;
+    carry = sumDigit > 9 ? 1 : 0;
     result = (sumDigit % 10) + result;
   }
   if (carry > 0) {
     result = carry + result;
   }
-  console.log("hehe")
   return result;
-}
+};
 
-const displayLargeNumber = (number) => {
+const displayLargeNumbers = (number) => {
   var result = "";
   var i = 0;
   while (number > 0) {
@@ -60,50 +28,42 @@ const displayLargeNumber = (number) => {
       result = "," + result;
     }
   }
-  
   return result;
-}
+};
+
 
 const x = "1234567890123456789";
-const y = "9876543210987654321";
+const y = "98765432109876543219595959595";
 const sum = addLargeNumbers(x, y);
-const formattedSum = displayLargeNumber(sum);
-console.log(formattedSum); // 1111111110111111111
-
-// const van = "5000000000000000000000000000000000000000"
-// const ban = "4654320000000000000000000000000000000000"
-// const can = addLargeNumbers (van, ban)
-// const fan = parseInt(can)
-// console.log(can)
-
-function caddLargeNumbers(x, y) {
-  var result = "";
-  var carry = 0;
-  for (var i = Math.max(x.length, y.length); i >= 0; i--) {
-    var digitX = i < x.length ? x[i] - "0" : 0;
-    var digitY = i < y.length ? y[i] - "0" : 0;
-    var sumDigit = digitX + digitY + carry;
-    carry = sumDigit > 9;
-    result = (sumDigit % 10) + result;
-  }
-  if (carry > 0) {
-    result = carry + result;
-  }
-  return result;
-}
-
-function displayLargeNumbers(number) {
-  var result = "";
-  var i = number.length - 1;
-  while (i >= 0) {
-    result = number[i] + result;
-    i--;
-  }
-  return result;
-}
+console.log(sum)
+const formattedSum = displayLargeNumbers(88228373);
+const ran = parseInt(sum)
+console.log(formattedSum); 
 
 
-var xs = "1234567890123456789";
-var ys = "9876543210987654321";
-var sums = caddLargeNumbers(xs, ys);
-console.log(displayLargeNumbers(sums)); // 1111111110111111111
+
+// const addLargeNumber = (x, y) => {
+//   const bigX = new BigNumber(x);
+//   const bigY = new BigNumber(y);
+//   const sum = bigX.plus(bigY);
+//   const result = parseFloat(sum)
+//   return result
+// };
+
+// // Example usage
+// const number1 = '123456789012345678901234567890';
+// const number2 = '987654321098765432109876543210';
+// const sump = addLargeNumber(number1, number2);
+// console.log(sump); // Output: 111111111011111111101111111100
+// const number = 1.1111111101111111e+30;
+// const formattedNumber = number.toLocaleString('en', { maximumFractionDigits: 0 });
+// console.log(typeof formattedNumber);
+// const iuo = "000000000000000000500000"
+// const nuber = "0000000000000000010000000"
+// const buba = iuo + nuber
+// const nuba = parseFloat(iuo + nuber)
+// const auba = String(nuba)
+// console.log(buba)
+// console.log(nuba)
+// console.log(typeof auba)
+
