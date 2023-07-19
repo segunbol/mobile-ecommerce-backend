@@ -1,6 +1,7 @@
 import express from 'express';
 import { verifyToken } from '../helpers/utils.js';
 import {createStore, getStore, getStores, storeLogin} from '../controller/storeController.js';
+import { createStoreWallet } from '../controller/storeWalletController.js';
 const storeRoutes = express.Router();
 
 //Get All Accounts
@@ -14,6 +15,8 @@ storeRoutes.post('/', createStore)
 
 // Create Account for All Users without an Account
 
-storeRoutes.post('/login',storeLogin)
+.post('/login',storeLogin)
+
+
 
 export default storeRoutes
