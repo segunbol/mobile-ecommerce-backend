@@ -5,7 +5,9 @@ import User from '../models/user.js';
 // Get All Accounts
 export const getAllAccounts = async(req, res) => {
   const accountList = await AccountBalance.find();
+   
 
+  
   if(!accountList) {
     res.status(500).json({success: false})
   }
