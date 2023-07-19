@@ -1,5 +1,4 @@
 import AccountBalance from '../models/accountBalance.js';
-import Store from '../models/store.js';
 import Transaction from '../models/transaction.js';
 import User from '../models/user.js';
 
@@ -55,28 +54,7 @@ export const createAccount = async (req, res) => {
   
 }
 
-export const createStoreAccount = async (req, res) => {
-  try {
-    const userExist = await Store.findById(req.body.storeId)
-    const accountExist = await AccountBalance.findOne({ storeId: req.body.storeId });
-  if (!userExist) 
-    return res.status(400).send("I no see User o, Boya you should create profile")
-  if (accountExist)
-    return res.status(400).send("This User get Account Already na")
 
-  let wallet = new AccountBalance({
-    storeId: req.body.storeId,
-  })
-  wallet = await wallet.save()
-  if (!wallet)
-  return res.status(400).send('The Account Was not created')
-
-  res.send(wallet)
-  } catch (error) {
-    console.error('Error while creating accounts:', error)
-  }
-  
-}
 
 // Create for All Users
 // Only Admin can do this or Authorise this
